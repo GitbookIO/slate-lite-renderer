@@ -1,18 +1,19 @@
 // @flow
 import React from 'react';
+import type Slate from 'slate';
 
 class LightRender extends React.PureComponent {
     props: {
         // className: string,
         // plugins: array,
         // role: string,
-        schema: object,
-        editor: object,
+        schema: *,
+        editor: *,
         state: Slate.State
         // style: object
     };
 
-    static renderNode({ editor, state, schema, node }) {
+    static renderNode({ editor, state, schema, node }): React.Element<*> {
         let children = null;
         if (node.nodes) {
             children = node.nodes.map(n =>
@@ -22,7 +23,12 @@ class LightRender extends React.PureComponent {
 
         // Get component
         if (node.kind === 'block') {
-            const X = schema.nodes[node.type];
+            const X =
+                schema.nodes[node.type] ||
+                (node.kind == 'block'
+                    ? props => <div {...props} />
+                    : props => <span {...props} />);
+
             return (
                 <X
                     key={node.key}
@@ -47,10 +53,12 @@ class LightRender extends React.PureComponent {
         const { state, schema, editor } = this.props;
 
         return (
-            <div key={state.document.key}>
-                {state.document.nodes.map(node =>
-                    LightRender.renderNode({ editor, state, schema, node })
-                )}
+            <div className="editor">
+                <div data-slate-editor="true" key={state.document.key}>
+                    {state.document.nodes.map(node =>
+                        LightRender.renderNode({ editor, state, schema, node })
+                    )}
+                </div>
             </div>
         );
     }

@@ -1,18 +1,16 @@
+// @flow
 import React from 'react';
+import Slate from 'slate';
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
 
-storiesOf('Button', module)
+import './stories.css';
+
+import richText from './rich-text';
+
+storiesOf('LightRender', module)
     .addDecorator(story => (
-        <div
-            style={{
-                display: 'flex',
-                justifyContent: 'center'
-            }}
-        >
-            {story()}
+        <div className="story">
+            <div className="story-inner">{story()}</div>
         </div>
     ))
-    .add('with text', () => (
-        <button onClick={action('clicked')}>Hi Button</button>
-    ));
+    .add('Rich text', richText);
