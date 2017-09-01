@@ -1,10 +1,17 @@
 {
     "parser": "babel-eslint",
     "extends": [
-        "plugin:flowtype/recommended",
         "gitbook"
     ],
     "plugins": [
         "flowtype"
-    ]
+    ],
+    "env": {
+         "browser": true
+    },
+    "settings": {
+        "import/resolver": {
+            "babel-module": {}
+        }
+    }
 }
