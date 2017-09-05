@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import Slate from 'slate';
 import { storiesOf } from '@storybook/react';
 
 import './stories.css';
